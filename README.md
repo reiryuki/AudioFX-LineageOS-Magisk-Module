@@ -1,4 +1,4 @@
-# **Lineage OS Features**
+# **LineageOS Features**
 
 ## Description
 Lineage Audio FX for any Android 10 ROM + Lineage Eleven Music
