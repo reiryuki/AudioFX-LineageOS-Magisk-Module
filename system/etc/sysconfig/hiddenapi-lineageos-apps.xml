@@ -1,1 +1,11 @@
-
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+   <hidden-api-whitelisted-app package="org.lineageos.snap"/>
+   <hidden-api-whitelisted-app package="org.cyanogenmod.snap"/>
+   <hidden-api-whitelisted-app package="org.lineageos.audiofx"/>
+   <hidden-api-whitelisted-app package="org.lineageos.eleven"/>
+   <hidden-api-whitelisted-app package="org.cyanogenmod.eleven"/>
+   <hidden-api-whitelisted-app package="org.lineageos.lineageparts"/>
+   <hidden-api-whitelisted-app package="org.lineageos.profiles"/>
+   <hidden-api-whitelisted-app package="org.cyanogenmod.profiles"/>
+</config>
