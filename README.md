@@ -1,7 +1,7 @@
 # **LineageOS Features**
 
 ## Description
-Lineage Audio FX for any Android 10 ROM + Lineage Eleven Music
+Lineage AudioFX for any Android 10 ROM + Lineage Eleven Music
 
 You may install another Lineage apps but the compatibility is not guaranteed.
 
@@ -10,7 +10,8 @@ v1.1
 - Initial release
 
 ## Requirements
-- Android 10 SDK 29 and Up
+- Android 10 SDK 29 and Up for AudioFX
+- Android Oreo SDK 26 and Up for Eleven Music (just an installer)
 - Magisk Installed
 
 ## Instructions
