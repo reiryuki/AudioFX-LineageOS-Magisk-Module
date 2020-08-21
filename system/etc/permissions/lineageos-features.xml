@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <feature name="org.lineageos.android"/>
+    <feature name="org.lineageos.audio"/>
+    <feature name="org.lineageos.hardware"/>
+    <feature name="org.lineageos.livedisplay"/>
+    <feature name="org.lineageos.performance"/>
+    <feature name="org.lineageos.profiles"/>
+    <feature name="org.lineageos.settings"/>
+    <feature name="org.lineageos.trust"/>
+</permissions>
+
