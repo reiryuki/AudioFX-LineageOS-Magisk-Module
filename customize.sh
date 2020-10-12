@@ -11,9 +11,9 @@ if ! pm list packages | grep -Eq org.lineageos.eleven; then
   FOLDER=/data/app/$ELEVEN/lib/$ARCH
   mkdir $FOLDER
   if [ "$IS64BIT" == true ]; then
-    cp $MODPATH/system/lib64/librsjni.so $FOLDER
+    cp -f $MODPATH/system/lib64/librsjni.so $FOLDER
   else
-    cp $MODPATH/system/lib/librsjni.so $FOLDER
+    cp -f $MODPATH/system/lib/librsjni.so $FOLDER
   fi
   chmod 0755 $FOLDER/librsjni.so
   chown -R 1000.1000 $FOLDER
@@ -29,6 +29,9 @@ fi
 # remove unused files
 rm -f $MODPATH/LICENSE
 rm -f $MODPATH/Eleven.apk
+rm -f `find /data/dalvik-cache -name *LineageAudioFX*`
+rm -f `find /data/system/package_cache -name *LineageAudioFX*`
+rm -f `find /data/system/package_cache -name *org.lineageos.audiofx*`
 
 # disable musicfx
 ui_print "- Disabling built-in MusicFX..."
