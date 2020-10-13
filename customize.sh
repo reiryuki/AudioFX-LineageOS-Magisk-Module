@@ -1,25 +1,27 @@
 ui_print " "
 
 # install eleven music
-if ! pm list packages | grep -Eq org.lineageos.eleven; then
+PKG=org.lineageos.eleven
+if ! pm list packages | grep -Eq $PKG; then
   ui_print "- Cleaning folders..."
-  rm -rf /data/app/org.lineageos.eleven*
+  rm -rf /data/app/$PKG*
+  rm -rf /data/data/$PKG/cache
   ui_print " "
   ui_print "- Installing Lineage Eleven Music as user app and"
   ui_print "  granting all permissions..."
   pm install -g $MODPATH/Eleven.apk
   ui_print " "
   ui_print "- Revoking unneeded permission..."
-  pm revoke org.lineageos.eleven android.permission.READ_PHONE_STATE
+  pm revoke $PKG android.permission.READ_PHONE_STATE
   ui_print "- Installing lib..."
-  ELEVEN=`ls /data/app | grep org.lineageos.eleven`
+  ELEVEN=`ls /data/app | grep $PKG`
   FOLDER=/data/app/$ELEVEN/lib/$ARCH
   mkdir $FOLDER
   if [ "$IS64BIT" == true ]; then
     cp -f $MODPATH/system/lib64/librsjni.so $FOLDER
   else
     cp -f $MODPATH/system/lib/librsjni.so $FOLDER
-    rm -rf $MODPATH/system/lib64
+    rm -rf `find $MODPATH/system -name *64`
   fi
   chmod 0755 $FOLDER/librsjni.so
   chown -R 1000.1000 $FOLDER
@@ -50,7 +52,7 @@ rm -f $MODPATH/LICENSE
 rm -f $MODPATH/Eleven.apk
 rm -f `find /data/dalvik-cache -name *LineageAudioFX*`
 rm -f `find /data/system/package_cache -name *LineageAudioFX*`
-rm -f `find /data/system/package_cache -name *org.lineageos.audiofx*`
+rm -f `find /data/system/package_cache -name *$PKG*`
 ui_print " "
 
 # disable musicfx
