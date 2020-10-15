@@ -67,8 +67,8 @@ ui_print " "
 ui_print " "
 ui_print " "
 ui_print " "
-ui_print "Regards"
-ui_print "Rei Ryuki the Fixer"
+ui_print "- Regards"
+ui_print "- Rei Ryuki the Fixer"
 
 
 
