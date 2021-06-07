@@ -15,7 +15,7 @@ You may install another Lineage apps but the compatibility is not guaranteed.
 - Reboot
 
 ## Telegram
-- https://t.me/audioryukimods
+- https://t.me/androidryukimodsdiscussions
 
 ## Donate
 - https://www.paypal.me/reiryuki
