@@ -1,21 +1,19 @@
-# **LineageOS Features**
+# AudioFX LineageOS Magisk Module
 
 ## Description
-Lineage AudioFX for any Android 10 ROM + Lineage Eleven Music
-
-You may install another Lineage apps but the compatibility is not guaranteed.
+- An equalizer ported from LineageOS ROM
 
 ## Requirements
-- Android 10 SDK 29 and Up for AudioFX
-- Android Oreo SDK 26 and Up for Eleven Music (just an installer)
+- Android 8 until 12
+- Not in LineageOS ROM
 - Magisk Installed
 
-## Instructions
-- Install this module via Magisk Manager
+## Installation Guide
+- Install this module via Magisk app or recovery
 - Reboot
 
 ## Telegram
 - https://t.me/androidryukimodsdiscussions
 
-## Donate
+## Thanks for Donations
 - https://www.paypal.me/reiryuki
