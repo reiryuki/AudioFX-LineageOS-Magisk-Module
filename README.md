@@ -9,7 +9,7 @@
 
 ## Requirements
 - Android 8 until 12
-- Not in LineageOS ROM
+- Not in Lineage based ROM
 - Magisk Installed
 
 ## Installation Guide
