@@ -11,7 +11,7 @@
 - https://t.me/androidryukimodsdiscussions/27160
 
 ## Requirements
-- Android 8 until 12
+- Android 6 until 12
 - Not in Lineage based ROM
 - Magisk Installed
 
