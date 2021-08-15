@@ -20,8 +20,9 @@
 - Install this module via Magisk app or recovery
 - Reboot
 
-## Telegram
-- https://t.me/androidryukimodsdiscussions
+## Credits
+- Android Ryuki Mods Discussions Team
+- https://t.me/androidryukimodsdiscussions/25188
 
 ## Thanks for Donations
 - https://www.paypal.me/reiryuki
