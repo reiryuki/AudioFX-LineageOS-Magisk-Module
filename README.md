@@ -16,7 +16,7 @@
 - Magisk Installed
 
 ## Installation Guide
-- Do not use AOSP soundfx Remover module or anything that disables your stock AOSP soundfx libraries!
+- Do not use AOSP soundfx Remover module without activating the Optionals command or anything that disables your stock AOSP soundfx libraries!
 - Install this module via Magisk app or recovery
 - Reboot
 
