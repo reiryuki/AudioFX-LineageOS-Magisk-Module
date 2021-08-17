@@ -20,6 +20,15 @@
 - Install this module via Magisk app or recovery
 - Reboot
 
+## Optionals
+- You can clear data the AudioFX LineageOS by run Terminal before flashing the module:
+
+  su
+
+  `setprop audiofx.cleanup 1`
+
+  Flash the module and reboot after.
+
 ## Credits
 - Android Ryuki Mods Discussions Team
 - https://t.me/androidryukimodsdiscussions/25188
