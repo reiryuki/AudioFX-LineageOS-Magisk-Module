@@ -29,6 +29,10 @@
 
   Flash the module and reboot after.
 
+## Bug Report
+- https://t.me/androidryukimodsdiscussions/2618
+- If you don't do above, it will be closed immediately
+
 ## Credits
 - Android Ryuki Mods Discussions Team
 - https://t.me/androidryukimodsdiscussions/25188
