@@ -20,6 +20,10 @@
 - Install this module via Magisk app or recovery
 - Reboot
 
+## Tested On
+- Android 10 CrDroid ROM
+- Android 11 DotOS ROM
+
 ## Optionals
 - You can clear data the AudioFX LineageOS by run Terminal before flashing the module:
 
