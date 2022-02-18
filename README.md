@@ -11,8 +11,8 @@
 - https://t.me/androidryukimodsdiscussions/27160
 
 ## Requirements
-- Android 6 until 12
-- Not in Lineage based ROM
+- Android 6 and up
+- NOT in any LineageOS nor CyanogenMod based ROM
 - Magisk Installed
 
 ## Installation Guide
@@ -25,21 +25,20 @@
 - Android 11 DotOS ROM
 
 ## Optionals
-- You can clear data the AudioFX LineageOS by run Terminal before flashing the module:
+- You can clear data the AudioFX LineageOS by run Terminal BEFORE INSTALLING THE MODULE:
 
-  su
+  `su -c setprop audiofx.cleanup 1`
 
-  `setprop audiofx.cleanup 1`
-
-  Flash the module and reboot after.
+  REINSTALL THE MODULE AFTER and reboot.
 
 ## Bug Report
 - https://t.me/androidryukimodsdiscussions/2618
-- If you don't do above, it will be closed immediately
+- If you don't do above, issues will be closed immediately
 
 ## Credits
-- Android Ryuki Mods Discussions Team
-- https://t.me/androidryukimodsdiscussions/25188
+- https://t.me/viperatmos
+- https://t.me/androidryukimodsdiscussions
+- https://t.me/androidappsportdevelopment
 
 ## Thanks for Donations
 - https://t.me/androidryukimodsdiscussions/2619
