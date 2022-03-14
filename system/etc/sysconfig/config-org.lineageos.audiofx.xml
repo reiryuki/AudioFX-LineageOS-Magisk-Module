@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <hidden-api-whitelisted-app package="org.lineageos.audiofx"/>
+    <allow-in-power-save package="org.lineageos.audiofx"/>
+    <allow-implicit-broadcast action="android.media.AUDIO_BECOMING_NOISY"/>
+</config>
+
+
