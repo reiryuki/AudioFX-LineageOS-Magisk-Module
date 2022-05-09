@@ -1,8 +1,8 @@
 id=AudioFXLineage
 name=AudioFX LineageOS
-version=v2.5
-versionCode=15
+version=v2.7-beta.1
+versionCode=17
 author=Rei Ryuki the Fixer
-description=An EQ ported from LineageOS ROM for any Android 6 and up.
+description=An EQ post process type soundfx ported from LineageOS ROM for any Android 6 and up.
 
 
