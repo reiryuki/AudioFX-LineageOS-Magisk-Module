@@ -83,26 +83,12 @@ fi
 for APPS in $APP; do
   rm -f `find /data/dalvik-cache /data/resource-cache -type f -name *$APPS*.apk`
 done
-rm -f $MODPATH/LICENSE
 rm -rf /metadata/magisk/$MODID
 rm -rf /mnt/vendor/persist/magisk/$MODID
 rm -rf /persist/magisk/$MODID
 rm -rf /data/unencrypted/magisk/$MODID
 rm -rf /cache/magisk/$MODID
 ui_print " "
-
-# power save
-PROP=`getprop power.save`
-FILE=$MODPATH/system/etc/sysconfig/*
-if [ "$PROP" == 1 ]; then
-  ui_print "- $MODNAME will not be allowed in power save."
-  ui_print "  It may save your battery but decreasing $MODNAME performance."
-  for PKGS in $PKG; do
-    sed -i "s/<allow-in-power-save package=\"$PKGS\"\/>//g" $FILE
-    sed -i "s/<allow-in-power-save package=\"$PKGS\" \/>//g" $FILE
-  done
-  ui_print " "
-fi
 
 # function
 cleanup() {
@@ -239,14 +225,13 @@ if [ -f $FILE ] && ! grep -Eq '#k' $FILE; then
   disable_module
 elif [ ! -f $FILE ] && [ -f $FILE2 ] && ! grep -Eq '#k' $FILE2; then
   disable_module
-else
+elif [ -f $FILE ] || [ -f $FILE2 ]; then
   keep_module
 fi
 
 # audio rotation
-PROP=`getprop audio.rotation`
 FILE=$MODPATH/service.sh
-if [ "$PROP" == 1 ]; then
+if getprop | grep -Eq "audio.rotation\]: \[1"; then
   ui_print "- Activating ro.audio.monitorRotation=true"
   sed -i '1i\
 resetprop ro.audio.monitorRotation true' $FILE
