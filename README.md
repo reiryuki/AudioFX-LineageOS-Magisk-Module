@@ -24,6 +24,7 @@
 - Android 10 CrDroid ROM
 - Android 11 DotOS ROM
 - Android 12 AncientOS ROM
+- Android 12.1 Nusantara ROM
 
 ## Optionals and Troubleshootings
 - https://t.me/androidryukimodsdiscussions/29836
