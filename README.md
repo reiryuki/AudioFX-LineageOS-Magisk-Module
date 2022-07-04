@@ -29,7 +29,7 @@
 ## Optionals and Troubleshootings
 - https://t.me/androidryukimodsdiscussions/29836
 - https://t.me/androidryukimodsdiscussions/60861
-- You can clear data the AudioFX LineageOS by run Terminal BEFORE INSTALLING THE MODULE:
+- You can clear data the AudioFX LineageOS by run Terminal BEFORE INSTALLING THE MODULE (only for v2.7 and bellow):
 
   `su -c setprop audiofx.cleanup 1`
 
@@ -47,6 +47,7 @@
 ## Thanks for Donations
 - https://t.me/androidryukimodsdiscussions/2619
 - https://www.paypal.me/reiryuki
+- https://ko-fi.com/reiryuki
 
 ## Download
 - Tap here > https://www.pling.com/p/1557380/
