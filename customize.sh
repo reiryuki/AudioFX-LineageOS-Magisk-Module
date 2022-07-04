@@ -7,6 +7,9 @@ else
   MAGISKTMP=`find /dev -mindepth 2 -maxdepth 2 -type d -name .magisk`
 fi
 
+# optionals
+OPTIONALS=/sdcard/optionals.prop
+
 # info
 MODVER=`grep_prop version $MODPATH/module.prop`
 MODVERCODE=`grep_prop versionCode $MODPATH/module.prop`
@@ -44,7 +47,7 @@ if [ "$BOOTMODE" != true ]; then
 fi
 FILE=$MODPATH/sepolicy.sh
 DES=$MODPATH/sepolicy.rule
-if [ -f $FILE ] && ! getprop | grep -Eq "sepolicy.sh\]: \[1"; then
+if [ -f $FILE ] && [ "`grep_prop sepolicy.sh $OPTIONALS`" != 1 ]; then
   mv -f $FILE $DES
   sed -i 's/magiskpolicy --live "//g' $DES
   sed -i 's/"//g' $DES
@@ -54,7 +57,7 @@ fi
 mv -f $MODPATH/aml.sh $MODPATH/.aml.sh
 
 # mod ui
-if getprop | grep -Eq "mod.ui\]: \[1"; then
+if [ "`grep_prop mod.ui $OPTIONALS`" == 1 ]; then
   APP=AudioFXLineage
   FILE=/sdcard/$APP.apk
   DIR=`find $MODPATH/system -type d -name $APP`
@@ -73,16 +76,12 @@ fi
 
 # cleaning
 ui_print "- Cleaning..."
-APP="`ls $MODPATH/system/priv-app` `ls $MODPATH/system/app` org.lineageos.platform-res.apk"
 PKG="lineageos.platform org.lineageos.audiofx"
 if [ "$BOOTMODE" == true ]; then
   for PKGS in $PKG; do
     RES=`pm uninstall $PKGS`
   done
 fi
-for APPS in $APP; do
-  rm -f `find /data/dalvik-cache /data/resource-cache -type f -name *$APPS*.apk`
-done
 rm -rf /metadata/magisk/$MODID
 rm -rf /mnt/vendor/persist/magisk/$MODID
 rm -rf /persist/magisk/$MODID
@@ -104,7 +103,8 @@ fi
 # cleanup
 DIR=/data/adb/modules/$MODID
 FILE=$DIR/module.prop
-if getprop | grep -Eq "audiofx.cleanup\]: \[1"; then
+if [ "`grep_prop data.cleanup $OPTIONALS`" == 1 ]; then
+  sed -i 's/^data.cleanup=1/data.cleanup=0/' $OPTIONALS
   ui_print "- Cleaning-up $MODID data..."
   cleanup
   ui_print " "
@@ -231,7 +231,7 @@ fi
 
 # audio rotation
 FILE=$MODPATH/service.sh
-if getprop | grep -Eq "audio.rotation\]: \[1"; then
+if [ "`grep_prop audio.rotation $OPTIONALS`" == 1 ]; then
   ui_print "- Activating ro.audio.monitorRotation=true"
   sed -i '1i\
 resetprop ro.audio.monitorRotation true' $FILE
@@ -244,21 +244,6 @@ DIR=`find $MODPATH/system/vendor -type d`
 for DIRS in $DIR; do
   chown 0.2000 $DIRS
 done
-if [ "$API" -ge 26 ]; then
-  magiskpolicy --live "type system_lib_file"
-  magiskpolicy --live "type vendor_file"
-  magiskpolicy --live "type vendor_configs_file"
-  magiskpolicy --live "dontaudit { system_lib_file vendor_file vendor_configs_file } labeledfs filesystem associate"
-  magiskpolicy --live "allow     { system_lib_file vendor_file vendor_configs_file } labeledfs filesystem associate"
-  magiskpolicy --live "dontaudit init { system_lib_file vendor_file vendor_configs_file } dir relabelfrom"
-  magiskpolicy --live "allow     init { system_lib_file vendor_file vendor_configs_file } dir relabelfrom"
-  magiskpolicy --live "dontaudit init { system_lib_file vendor_file vendor_configs_file } file relabelfrom"
-  magiskpolicy --live "allow     init { system_lib_file vendor_file vendor_configs_file } file relabelfrom"
-  chcon -R u:object_r:system_lib_file:s0 $MODPATH/system/lib*
-  chcon -R u:object_r:vendor_file:s0 $MODPATH/system/vendor
-  chcon -R u:object_r:vendor_configs_file:s0 $MODPATH/system/vendor/etc
-  chcon -R u:object_r:vendor_configs_file:s0 $MODPATH/system/vendor/odm/etc
-fi
 ui_print " "
 
 

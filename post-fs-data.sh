@@ -1,5 +1,6 @@
 mount -o rw,remount /data
 MODPATH=${0%/*}
+API=`getprop ro.build.version.sdk`
 
 # debug
 exec 2>$MODPATH/debug-pfsd.log
@@ -9,6 +10,11 @@ set -x
 FILE=$MODPATH/sepolicy.sh
 if [ -f $FILE ]; then
   sh $FILE
+fi
+
+# context
+if [ "$API" -ge 26 ]; then
+  chcon -R u:object_r:system_lib_file:s0 $MODPATH/system/lib*
 fi
 
 # conflict

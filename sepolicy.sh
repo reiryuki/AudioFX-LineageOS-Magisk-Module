@@ -2,6 +2,15 @@
 magiskpolicy --live "dontaudit system_server system_file file write"
 magiskpolicy --live "allow     system_server system_file file write"
 
+# context
+magiskpolicy --live "type system_lib_file"
+magiskpolicy --live "dontaudit system_lib_file labeledfs filesystem associate"
+magiskpolicy --live "allow     system_lib_file labeledfs filesystem associate"
+magiskpolicy --live "dontaudit init system_lib_file dir relabelfrom"
+magiskpolicy --live "allow     init system_lib_file dir relabelfrom"
+magiskpolicy --live "dontaudit init system_lib_file file relabelfrom"
+magiskpolicy --live "allow     init system_lib_file file relabelfrom"
+
 # additional
 magiskpolicy --live "allow { hal_audio_default mtk_hal_audio audioserver } system_suspend_hwservice hwservice_manager find"
 magiskpolicy --live "dontaudit { hal_audio_default mtk_hal_audio audioserver } { default_prop boottime_prop } file { read open getattr map }"
