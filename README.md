@@ -23,7 +23,7 @@
 - Magisk installed
 
 ## Installation Guide & Download Link
-- Do not use AOSP soundfx Remover Magisk Module without activating the Optionals nor anything that disables your stock AOSP soundfx libraries!
+- Do not use AOSP soundfx Remover Magisk Module nor anything that disables your stock AOSP soundfx libraries!
 - Install this module https://www.pling.com/p/1557380/ via Magisk Manager or Recovery
 - Install AML Magisk Module https://zackptg5.com/android.php#aml only if using any other audio mod module
 - Reboot
