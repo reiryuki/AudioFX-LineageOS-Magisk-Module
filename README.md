@@ -20,7 +20,7 @@
 ## Requirements
 - Android 6 and up
 - NOT in any LineageOS nor CyanogenMod based ROM
-- Magisk Installed
+- Magisk installed
 
 ## Installation Guide & Download Link
 - Do not use AOSP soundfx Remover Magisk Module without activating the Optionals nor anything that disables your stock AOSP soundfx libraries!
@@ -36,6 +36,7 @@
 
 ## Support & Bug Report
 - https://t.me/androidryukimodsdiscussions/2618
+- If you don't do above, issues will be closed immediately
 
 ## Tested on
 - Android 10 CrDroid ROM

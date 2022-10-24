@@ -7,9 +7,15 @@ set -x
 
 # restart
 if [ "$API" -ge 24 ]; then
-  killall audioserver
+  PID=`pidof audioserver`
+  if [ "$PID" ]; then
+    killall audioserver
+  fi
 else
-  killall mediaserver
+  PID=`pidof mediaserver`
+  if [ "$PID" ]; then
+    killall mediaserver
+  fi
 fi
 
 # wait
