@@ -3,5 +3,3 @@
     <hidden-api-whitelisted-app package="org.lineageos.audiofx"/>
     <allow-implicit-broadcast action="android.media.AUDIO_BECOMING_NOISY"/>
 </config>
-
-
