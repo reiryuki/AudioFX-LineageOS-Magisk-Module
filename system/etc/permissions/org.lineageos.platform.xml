@@ -3,4 +3,3 @@
     <library name="org.lineageos.platform"
         file="/system/framework/org.lineageos.platform.jar"/>
 </permissions>
-

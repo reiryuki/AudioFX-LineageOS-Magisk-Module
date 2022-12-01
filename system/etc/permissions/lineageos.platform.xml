@@ -3,4 +3,3 @@
     <library name="lineageos.platform"
         file="/system/framework/org.lineageos.platform-res.apk"/>
 </permissions>
-
