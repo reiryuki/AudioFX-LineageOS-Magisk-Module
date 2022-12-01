@@ -19,9 +19,17 @@ fi
 SYSTEM=`realpath $MIRROR/system`
 PRODUCT=`realpath $MIRROR/product`
 VENDOR=`realpath $MIRROR/vendor`
-SYSTEM_EXT=`realpath $MIRROR/system/system_ext`
-ODM=`realpath /odm`
-MY_PRODUCT=`realpath /my_product`
+SYSTEM_EXT=`realpath $MIRROR/system_ext`
+if [ -d $MIRROR/odm ]; then
+  ODM=`realpath $MIRROR/odm`
+else
+  ODM=`realpath /odm`
+fi
+if [ -d $MIRROR/my_product ]; then
+  MY_PRODUCT=`realpath $MIRROR/my_product`
+else
+  MY_PRODUCT=`realpath /my_product`
+fi
 
 # optionals
 OPTIONALS=/sdcard/optionals.prop
@@ -112,11 +120,11 @@ ui_print " "
 # function
 cleanup() {
 if [ -f $DIR/uninstall.sh ]; then
-  . $DIR/uninstall.sh
+  sh $DIR/uninstall.sh
 fi
 DIR=/data/adb/modules_update/$MODID
 if [ -f $DIR/uninstall.sh ]; then
-  . $DIR/uninstall.sh
+  sh $DIR/uninstall.sh
 fi
 }
 
@@ -177,6 +185,12 @@ elif [ "`grep_prop permissive.mode $OPTIONALS`" == 2 ]; then
 fi
 
 # function
+hide_oat() {
+for APPS in $APP; do
+  mkdir -p `find $MODPATH/system -type d -name $APPS`/oat
+  touch `find $MODPATH/system -type d -name $APPS`/oat/.replace
+done
+}
 replace_dir() {
 if [ -d $DIR ]; then
   mkdir -p $MODDIR
@@ -220,6 +234,8 @@ replace_dir
 }
 
 # hide
+APP="`ls $MODPATH/system/priv-app` `ls $MODPATH/system/app`"
+hide_oat
 APP="MusicFX AudioFX SoundEnhancement"
 for APPS in $APP; do
   hide_app
