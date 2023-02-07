@@ -38,7 +38,6 @@
 - If you don't do above, issues will be closed immediately
 
 ## Tested on
-- Android 10 CrDroid ROM
 - Android 11 DotOS ROM
 - Android 12 AncientOS ROM
 - Android 12.1 Nusantara ROM
