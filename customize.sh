@@ -33,6 +33,9 @@ fi
 
 # optionals
 OPTIONALS=/sdcard/optionals.prop
+if [ ! -f $OPTIONALS ]; then
+  touch $OPTIONALS
+fi
 
 # info
 MODVER=`grep_prop version $MODPATH/module.prop`
@@ -72,17 +75,25 @@ if [ "$BOOTMODE" != true ]; then
   mount -o rw -t auto /dev/block/bootdevice/by-name/metadata /metadata
 fi
 
-# sepolicy.rule
-FILE=$MODPATH/sepolicy.sh
-DES=$MODPATH/sepolicy.rule
-if [ -f $FILE ] && [ "`grep_prop sepolicy.sh $OPTIONALS`" != 1 ]; then
+# sepolicy
+FILE=$MODPATH/sepolicy.rule
+DES=$MODPATH/sepolicy.pfsd
+if [ "`grep_prop sepolicy.sh $OPTIONALS`" == 1 ]\
+&& [ -f $FILE ]; then
   mv -f $FILE $DES
-  sed -i 's/magiskpolicy --live "//g' $DES
-  sed -i 's/"//g' $DES
 fi
 
 # .aml.sh
 mv -f $MODPATH/aml.sh $MODPATH/.aml.sh
+
+# stream mode
+PROP=`grep_prop stream.mode $OPTIONALS`
+if echo "$PROP" | grep -Eq m; then
+  ui_print "- Using post process music stream..."
+  cp -rf $MODPATH/system_post_process/* $MODPATH/system
+  ui_print " "
+fi
+rm -rf $MODPATH/system_post_process
 
 # mod ui
 if [ "`grep_prop mod.ui $OPTIONALS`" == 1 ]; then
@@ -104,10 +115,10 @@ fi
 
 # cleaning
 ui_print "- Cleaning..."
-PKG="lineageos.platform org.lineageos.audiofx"
+PKG=`cat $MODPATH/package.txt`
 if [ "$BOOTMODE" == true ]; then
   for PKGS in $PKG; do
-    RES=`pm uninstall $PKGS`
+    RES=`pm uninstall $PKGS 2>/dev/null`
   done
 fi
 rm -rf /metadata/magisk/$MODID
@@ -116,6 +127,46 @@ rm -rf /persist/magisk/$MODID
 rm -rf /data/unencrypted/magisk/$MODID
 rm -rf /cache/magisk/$MODID
 ui_print " "
+
+# function
+conflict() {
+for NAMES in $NAME; do
+  DIR=/data/adb/modules_update/$NAMES
+  if [ -f $DIR/uninstall.sh ]; then
+    sh $DIR/uninstall.sh
+  fi
+  rm -rf $DIR
+  DIR=/data/adb/modules/$NAMES
+  rm -f $DIR/update
+  touch $DIR/remove
+  FILE=/data/adb/modules/$NAMES/uninstall.sh
+  if [ -f $FILE ]; then
+    sh $FILE
+    rm -f $FILE
+  fi
+  rm -rf /metadata/magisk/$NAMES
+  rm -rf /mnt/vendor/persist/magisk/$NAMES
+  rm -rf /persist/magisk/$NAMES
+  rm -rf /data/unencrypted/magisk/$NAMES
+  rm -rf /cache/magisk/$NAMES
+done
+}
+conflict_disable() {
+for NAMES in $NAME; do
+  DIR=/data/adb/modules_update/$NAMES
+  touch $DIR/disable
+  DIR=/data/adb/modules/$NAMES
+  touch $DIR/disable
+done
+}
+
+# conflict
+ui_print "- This module uses stock AOSP soundfx."
+ui_print "  Make sure you're not using any module that deactivating it"
+ui_print "  like AOSP soundfx Remover or anything else!"
+ui_print " "
+NAME=AOSPsoundfxRemover
+conflict_disable
 
 # function
 cleanup() {
@@ -184,6 +235,14 @@ elif [ "`grep_prop permissive.mode $OPTIONALS`" == 2 ]; then
   ui_print " "
 fi
 
+# /priv-app
+if [ ! -d $SYSTEM/priv-app ]; then
+  ui_print "- /system/priv-app is not supported"
+  ui_print "  Moving to /system/app..."
+  mv -f $MODPATH/system/priv-app $MODPATH/system/app
+  ui_print " "
+fi
+
 # function
 hide_oat() {
 for APPS in $APP; do
@@ -240,41 +299,6 @@ APP="MusicFX AudioFX SoundEnhancement"
 for APPS in $APP; do
   hide_app
 done
-APP=SoundEnhancement
-for APPS in $APP; do
-  mkdir -p $MODPATH/system/app/$APPS
-  touch $MODPATH/system/app/$APPS/.replace
-  mkdir -p $MODPATH/system/priv-app/$APPS
-  touch $MODPATH/system/priv-app/$APPS/.replace
-done
-
-# function
-disable_module() {
-  ui_print "- Disable AOSP soundfx Remover module..."
-  touch /data/adb/modules/AOSPsoundfxRemover/disable
-  touch /data/adb/modules_update/AOSPsoundfxRemover/disable
-  ui_print "  If you want to keep the AOSP soundfx Remover,"
-  ui_print "  please READ AOSP soundfx Remover github Optionals!"
-  ui_print " "
-}
-keep_module() {
-  ui_print "- You can keep the AOSP soundfx Remover module"
-  ui_print " "
-}
-
-# conflict
-ui_print "- Make sure you're not using any modules that deactivates"
-ui_print "  your stock AOSP soundfx loader or libraries!"
-ui_print " "
-FILE=/data/adb/modules_update/AOSPsoundfxRemover/.aml.sh
-FILE2=/data/adb/modules/AOSPsoundfxRemover/.aml.sh
-if [ -f $FILE ] && ! grep -Eq '#k' $FILE; then
-  disable_module
-elif [ ! -f $FILE ] && [ -f $FILE2 ] && ! grep -Eq '#k' $FILE2; then
-  disable_module
-elif [ -f $FILE ] || [ -f $FILE2 ]; then
-  keep_module
-fi
 
 # audio rotation
 FILE=$MODPATH/service.sh
@@ -282,6 +306,23 @@ if [ "`grep_prop audio.rotation $OPTIONALS`" == 1 ]; then
   ui_print "- Activating ro.audio.monitorRotation=true"
   sed -i '1i\
 resetprop ro.audio.monitorRotation true' $FILE
+  ui_print " "
+fi
+
+# raw
+FILE=$MODPATH/.aml.sh
+if [ "`grep_prop disable.raw $OPTIONALS`" == 0 ]; then
+  ui_print "- Not disabling Ultra Low Latency playback (RAW)"
+  ui_print " "
+else
+  sed -i 's/#u//g' $FILE
+fi
+
+# other
+FILE=$MODPATH/service.sh
+if [ "`grep_prop other.etc $OPTIONALS`" == 1 ]; then
+  ui_print "- Activating other etc files bind mount..."
+  sed -i 's/#p//g' $FILE
   ui_print " "
 fi
 

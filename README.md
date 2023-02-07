@@ -6,10 +6,7 @@
 
 ## Descriptions
 - Equalizer soundfx ported from LineageOS ROM and integrated as a Magisk Module for all supported and rooted devices with Magisk
-- Post process type soundfx
-- Can only be applied with Music apps that has external EQ option such as Xperia Music, Youtube Music, and Spotify. Not working with SoundCloud nor Youtube app.
-- Deactivates any global type soundfx while turned on
-- Will take about 3 minutes after device boot until the FX is started
+- Global type soundfx
 
 ## Sources
 - LineageOS ROM
@@ -24,11 +21,14 @@
 
 ## Installation Guide & Download Link
 - Do not use AOSP soundfx Remover Magisk Module nor anything that disables your stock AOSP soundfx libraries!
-- Install this module https://www.pling.com/p/1557380/ via Magisk Manager or Recovery
+- Install this module https://www.pling.com/p/1557380/ via Magisk app or Recovery
+- Install AML Magisk Module https://t.me/androidryukimodsdiscussions/29836 only if using any other audio mod module
 - Reboot
+- AudioFX LineageOS now can be applied with apps that doesn't use external EQ option like YouTube and SoundCloud (except you are enabling music stream mode option) but you need to play music with an app that uses external EQ option first after device boot like Xperia Music, YouTube Music, & Spotify
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/60861
+- https://t.me/androidryukimodsdiscussions/26764
 
 ## Troubleshootings
 - https://t.me/androidryukimodsdiscussions/29836
@@ -42,6 +42,7 @@
 - Android 11 DotOS ROM
 - Android 12 AncientOS ROM
 - Android 12.1 Nusantara ROM
+- Android 13 AOSP ROM
 
 ## Credits and contributors
 - https://t.me/viperatmos
