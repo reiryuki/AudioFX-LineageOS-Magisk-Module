@@ -41,16 +41,8 @@ VENDOR=`realpath $MIRROR/vendor`
 ODM=`realpath $MIRROR/odm`
 MY_PRODUCT=`realpath $MIRROR/my_product`
 
-# mount
-NAME="*audio*effects*.conf -o -name *audio*effects*.xml -o -name *policy*.conf -o -name *policy*.xml"
-if [ -d $AML ] && [ ! -f $AML/disable ]\
-&& find $AML/system/vendor -type f -name $NAME; then
-  NAME="*audio*effects*.conf -o -name *audio*effects*.xml"
-#p  NAME="*audio*effects*.conf -o -name *audio*effects*.xml -o -name *policy*.conf -o -name *policy*.xml"
-  DIR=$AML/system/vendor
-else
-  DIR=$MODPATH/system/vendor
-fi
+# function
+bind_other_etc() {
 FILE=`find $DIR/etc -maxdepth 1 -type f -name $NAME`
 if [ ! -d $ODM ] && [ "`realpath /odm/etc`" == /odm/etc ]\
 && [ "$FILE" ]; then
@@ -71,6 +63,18 @@ if [ ! -d $MY_PRODUCT ] && [ -d /my_product/etc ]\
       mount -o bind $i $j
     fi
   done
+fi
+}
+
+# mount
+NAME="*policy*.conf -o -name *policy*.xml"
+if [ -d $AML ] && [ ! -f $AML/disable ]\
+&& find $AML/system/vendor -type f -name $NAME; then
+  DIR=$AML/system/vendor
+#p  bind_other_etc
+else
+  DIR=$MODPATH/system/vendor
+  bind_other_etc
 fi
 
 # wait

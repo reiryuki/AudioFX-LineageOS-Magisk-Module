@@ -68,7 +68,7 @@ if [ -d $VETC/audio/"$PROP" ]; then
 fi
 
 # audio files
-NAME="*audio*effects*.conf -o -name *audio*effects*.xml -o -name *policy*.conf -o -name *policy*.xml"
+NAME="*policy*.conf -o -name *policy*.xml"
 rm -f `find $MODPATH/system -type f -name $NAME`
 A=`find $ETC -maxdepth 1 -type f -name $NAME`
 VA=`find $VETC -maxdepth 1 -type f -name $NAME`
@@ -119,7 +119,7 @@ if [ ! -d $MY_PRODUCT ] && [ -d /my_product/etc ]; then
     cp -f $MPA $MODVETC
   fi
 fi
-rm -f `find $MODPATH/system -type f -name *policy*volume*.xml -o -name *audio*effects*spatializer*.xml`
+rm -f `find $MODPATH/system -type f -name *policy*volume*.xml`
 
 # run
 . $MODPATH/.aml.sh
@@ -130,5 +130,13 @@ if [ -f $FILE ]; then
   . $FILE
   rm -f $FILE
 fi
+
+
+
+
+
+
+
+
 
 

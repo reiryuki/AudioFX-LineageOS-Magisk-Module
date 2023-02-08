@@ -300,6 +300,44 @@ for APPS in $APP; do
   hide_app
 done
 
+# function
+file_check_system() {
+for NAMES in $NAME; do
+  if [ "$IS64BIT" == true ]; then
+    FILE=$SYSTEM/lib64/$NAMES
+    FILE2=$SYSTEM_EXT/lib64/$NAMES
+    if [ -f $FILE ] || [ -f $FILE2 ]; then
+      ui_print "- Detected $NAMES 64"
+      ui_print " "
+      rm -f $MODPATH/system/lib64/$NAMES
+    fi
+  fi
+  FILE=$SYSTEM/lib/$NAMES
+  FILE2=$SYSTEM_EXT/lib/$NAMES
+  if [ -f $FILE ] || [ -f $FILE2 ]; then
+    ui_print "- Detected $NAMES"
+    ui_print " "
+    rm -f $MODPATH/system/lib/$NAMES
+  fi
+done
+}
+file_check_framework() {
+for NAMES in $NAME; do
+  FILE=$SYSTEM/framework/$NAMES
+  if [ -f $FILE ]; then
+    ui_print "- Detected $NAMES"
+    ui_print " "
+    rm -f $MODPATH/system/framework/$NAMES
+  fi
+done
+}
+
+# check
+NAME=liblineage-sdk_platform_jni.so
+file_check_system
+NAME=`ls $MODPATH/system/framework`
+file_check_framework
+
 # audio rotation
 FILE=$MODPATH/service.sh
 if [ "`grep_prop audio.rotation $OPTIONALS`" == 1 ]; then

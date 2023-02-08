@@ -16,7 +16,6 @@
 
 ## Requirements
 - Android 6 and up
-- NOT in any LineageOS nor CyanogenMod based ROM
 - Magisk installed
 
 ## Installation Guide & Download Link
