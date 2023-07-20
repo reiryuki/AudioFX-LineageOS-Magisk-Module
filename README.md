@@ -2,11 +2,12 @@
 
 ## DISCLAIMER
 - LineageOS apps and blobs are owned by LineageOS™.
-- The MIT license specified here is for the Magisk Module, not for LineageOS apps and blobs.
+- The MIT license specified here is for the Magisk Module only, not for LineageOS apps and blobs.
 
 ## Descriptions
 - Equalizer soundfx ported from LineageOS ROM and integrated as a Magisk Module for all supported and rooted devices with Magisk
 - Global type soundfx
+- Conflicted with Samsung Sound Alive FX
 
 ## Sources
 - LineageOS ROM
@@ -16,13 +17,16 @@
 
 ## Requirements
 - Android 6 and up
-- Magisk installed
+- Magisk or KernelSU installed
 
 ## Installation Guide & Download Link
-- Do not use AOSP soundfx Remover Magisk Module nor anything that disables your stock AOSP soundfx libraries!
-- Install this module https://www.pling.com/p/1557380/ via Magisk app or Recovery
+- Do not use AOSP soundfx Remover Magisk Module nor Samsung Sound Alive Magisk Module nor anything that disables your stock AOSP soundfx libraries!
+- Install this module https://www.pling.com/p/1557380/ via Magisk app or KernelSU app or Recovery if Magisk installed
 - Install AML Magisk Module https://t.me/androidryukimodsdiscussions/29836 only if using any other audio mod module
+- If you are in Samsung One UI/TouchWiz ROM, then you need to install Sound Alive FX Remover (and AML) also: https://github.com/reiryuki/Sound-Alive-FX-Remover-Magisk-Module
 - Reboot
+- If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot after
+- If you are using SUList, you need to allow list manually your home launcher app (enable show system apps) and reboot after
 - AudioFX LineageOS now can be applied with apps that doesn't use external EQ option like YouTube and SoundCloud (except you are enabling music stream mode option) but you need to play music with an app that uses external EQ option first after device boot like Xperia Music, YouTube Music, & Spotify
 
 ## Optionals
@@ -40,7 +44,7 @@
 - Android 11 DotOS ROM
 - Android 12 AncientOS ROM
 - Android 12.1 Nusantara ROM
-- Android 13 AOSP ROM
+- Android 13 AOSP ROM & CrDroid ROM
 
 ## Credits and contributors
 - https://t.me/viperatmos
