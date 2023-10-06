@@ -9,6 +9,22 @@ if [ "$BOOTMODE" != true ]; then
   ui_print " "
 fi
 
+# optionals
+OPTIONALS=/sdcard/optionals.prop
+if [ ! -f $OPTIONALS ]; then
+  touch $OPTIONALS
+fi
+
+# debug
+if [ "`grep_prop debug.log $OPTIONALS`" == 1 ]; then
+  ui_print "- The install log will contain detailed information"
+  set -x
+  ui_print " "
+fi
+
+# var
+LIST32BIT=`getprop ro.product.cpu.abilist32`
+
 # run
 . $MODPATH/function.sh
 
@@ -31,12 +47,22 @@ ui_print " "
 
 # bit
 if [ "$IS64BIT" == true ]; then
-  ui_print "- 64 bit"
+  ui_print "- 64 bit architecture"
+  ui_print " "
+  # 32 bit
+  if [ "$LIST32BIT" ]; then
+    ui_print "- 32 bit library support"
+  else
+    ui_print "- Doesn't support 32 bit library"
+    rm -rf $MODPATH/system*/lib $MODPATH/system*/vendor/lib
+  fi
+  ui_print " "
 else
-  ui_print "- 32 bit"
+  ui_print "- 32 bit architecture"
   rm -rf `find $MODPATH -type d -name *64*`
+  ui_print " "
 fi
-ui_print " "
+
 
 # sdk
 NUM=23
@@ -57,10 +83,16 @@ magisk_setup
 
 # path
 SYSTEM=`realpath $MIRROR/system`
-PRODUCT=`realpath $MIRROR/product`
-VENDOR=`realpath $MIRROR/vendor`
-SYSTEM_EXT=`realpath $MIRROR/system_ext`
 if [ "$BOOTMODE" == true ]; then
+  if [ ! -d $MIRROR/vendor ]; then
+    mount_vendor_to_mirror
+  fi
+  if [ ! -d $MIRROR/product ]; then
+    mount_product_to_mirror
+  fi
+  if [ ! -d $MIRROR/system_ext ]; then
+    mount_system_ext_to_mirror
+  fi
   if [ ! -d $MIRROR/odm ]; then
     mount_odm_to_mirror
   fi
@@ -68,14 +100,11 @@ if [ "$BOOTMODE" == true ]; then
     mount_my_product_to_mirror
   fi
 fi
+VENDOR=`realpath $MIRROR/vendor`
+PRODUCT=`realpath $MIRROR/product`
+SYSTEM_EXT=`realpath $MIRROR/system_ext`
 ODM=`realpath $MIRROR/odm`
 MY_PRODUCT=`realpath $MIRROR/my_product`
-
-# optionals
-OPTIONALS=/sdcard/optionals.prop
-if [ ! -f $OPTIONALS ]; then
-  touch $OPTIONALS
-fi
 
 # sepolicy
 FILE=$MODPATH/sepolicy.rule
@@ -107,15 +136,6 @@ if [ "`grep_prop mod.ui $OPTIONALS`" == 1 ]; then
   fi
   ui_print " "
 fi
-
-# stream mode
-PROP=`grep_prop stream.mode $OPTIONALS`
-if [ "$MOD_UI" != true ] && echo "$PROP" | grep -q m; then
-  ui_print "- Using post process music stream..."
-  cp -rf $MODPATH/system_post_process/* $MODPATH/system
-  ui_print " "
-fi
-rm -rf $MODPATH/system_post_process
 
 # cleaning
 ui_print "- Cleaning..."
@@ -292,43 +312,41 @@ hide_oat
 APPS="MusicFX AudioFX SoundEnhancement"
 hide_app
 
+# stream mode
+FILE=$MODPATH/service.sh
+PROP=`grep_prop stream.mode $OPTIONALS`
+if echo "$PROP" | grep -q m; then
+  ui_print "- Using post process type soundfx"
+  ui_print "  instead of global type soundfx"
+  sed -i 's|ro.audiofx.global.effect true|ro.audiofx.global.effect false|g' $FILE
+  ui_print " "
+fi
+
 # function
 file_check_system() {
-for NAME in $NAMES; do
-  if [ "$IS64BIT" == true ]; then
-    FILE=$SYSTEM/lib64/$NAME
-    FILE2=$SYSTEM_EXT/lib64/$NAME
-    if [ -f $FILE ] || [ -f $FILE2 ]; then
-      ui_print "- Detected $NAME 64"
-      ui_print " "
-      rm -f $MODPATH/system/lib64/$NAME
-    fi
-  fi
-  FILE=$SYSTEM/lib/$NAME
-  FILE2=$SYSTEM_EXT/lib/$NAME
-  if [ -f $FILE ] || [ -f $FILE2 ]; then
-    ui_print "- Detected $NAME"
+for FILE in $FILES; do
+  DES=$SYSTEM$FILE
+  DES2=$SYSTEM_EXT$FILE
+  if [ -f $DES ] || [ -f $DES2 ]; then
+    ui_print "- Detected $FILE"
     ui_print " "
-    rm -f $MODPATH/system/lib/$NAME
-  fi
-done
-}
-file_check_framework() {
-for NAME in $NAMES; do
-  FILE=$SYSTEM/framework/$NAME
-  if [ -f $FILE ]; then
-    ui_print "- Detected $NAME"
-    ui_print " "
-    rm -f $MODPATH/system/framework/$NAME
+    rm -f $MODPATH/system$FILE
   fi
 done
 }
 
 # check
-NAMES=liblineage-sdk_platform_jni.so
+if [ "$IS64BIT" == true ]; then
+  FILES=/lib64/liblineage-sdk_platform_jni.so
+  file_check_system
+fi
+if [ "LIST32BIT" ]; then
+  FILES=/lib/liblineage-sdk_platform_jni.so
+  file_check_system
+fi
+FILES="/framework/org.lineageos.platform-res.apk
+       /framework/org.lineageos.platform-mod.jar"
 file_check_system
-NAMES=`ls $MODPATH/system/framework`
-file_check_framework
 
 # audio rotation
 FILE=$MODPATH/service.sh
@@ -345,7 +363,7 @@ if [ "`grep_prop disable.raw $OPTIONALS`" == 0 ]; then
   ui_print "- Not disables Ultra Low Latency playback (RAW)"
   ui_print " "
 else
-  sed -i 's/#u//g' $FILE
+  sed -i 's|#u||g' $FILE
 fi
 
 # run

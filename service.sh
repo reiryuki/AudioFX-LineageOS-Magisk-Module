@@ -1,9 +1,15 @@
 MODPATH=${0%/*}
-API=`getprop ro.build.version.sdk`
 
 # log
 exec 2>$MODPATH/debug.log
 set -x
+
+# var
+API=`getprop ro.build.version.sdk`
+
+# prop
+resetprop ro.audio.ignore_effects false
+resetprop ro.audiofx.global.effect true
 
 # restart
 if [ "$API" -ge 24 ]; then

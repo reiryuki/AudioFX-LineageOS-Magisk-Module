@@ -77,13 +77,6 @@ fi
 . $MODPATH/copy.sh
 . $MODPATH/.aml.sh
 
-# cleaning
-FILE=$MODPATH/cleaner.sh
-if [ -f $FILE ]; then
-  . $FILE
-  rm -f $FILE
-fi
-
 # permission
 if [ "$API" -ge 26 ]; then
   DIRS=`find $MODPATH/vendor\
@@ -133,7 +126,12 @@ if ! grep delta /data/adb/magisk/util_functions.sh; then
   mount_helper
 fi
 
-
+# cleaning
+FILE=$MODPATH/cleaner.sh
+if [ -f $FILE ]; then
+  . $FILE
+  mv -f $FILE $FILE\.txt
+fi
 
 
 

@@ -27,13 +27,14 @@
 - Reboot
 - If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot after
 - If you are using SUList, you need to allow list manually your home launcher app (enable show system apps) and reboot after
-- AudioFX LineageOS now can be applied with apps that doesn't use external EQ option like YouTube and SoundCloud (except you are enabling music stream mode option) but you need to play music with an app that uses external EQ option first after device boot like Xperia Music, YouTube Music, & Spotify
+- Play a music with any app that uses external EQ like Xperia Music, YouTube Music, or Spotify first, otherwise AudioFX LineageOS will not work with player that doesn't use external EQ like YouTube and SoundCloud (this trick can't be working if you are activating music stream mode optional)
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/60861
 - https://t.me/androidryukimodsdiscussions/26764
 
 ## Troubleshootings
+- https://t.me/androidryukimodsdiscussions/193490
 - https://t.me/androidryukimodsdiscussions/29836
 
 ## Support & Bug Report
@@ -52,7 +53,7 @@
 - You can contribute ideas about this Magisk Module here: https://t.me/androidappsportdevelopment
 
 ## Thanks for Donations
-- This Magisk Module is always will be free but you can however show us that you are care by making a donations:
+This Magisk Module is always will be free but you can however show us that you are care by making a donations:
 - https://ko-fi.com/reiryuki
 - https://www.paypal.me/reiryuki
 - https://t.me/androidryukimodsdiscussions/2619
