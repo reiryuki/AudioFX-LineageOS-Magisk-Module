@@ -1,16 +1,23 @@
 # space
 ui_print " "
 
+# var
+UID=`id -u`
+LIST32BIT=`grep_get_prop ro.product.cpu.abilist32`
+if [ ! "$LIST32BIT" ]; then
+  LIST32BIT=`grep_get_prop ro.system.product.cpu.abilist32`
+fi
+
 # log
 if [ "$BOOTMODE" != true ]; then
-  FILE=/sdcard/$MODID\_recovery.log
+  FILE=/data/media/"$UID"/$MODID\_recovery.log
   ui_print "- Log will be saved at $FILE"
   exec 2>$FILE
   ui_print " "
 fi
 
 # optionals
-OPTIONALS=/sdcard/optionals.prop
+OPTIONALS=/data/media/"$UID"/optionals.prop
 if [ ! -f $OPTIONALS ]; then
   touch $OPTIONALS
 fi
@@ -21,9 +28,6 @@ if [ "`grep_prop debug.log $OPTIONALS`" == 1 ]; then
   set -x
   ui_print " "
 fi
-
-# var
-LIST32BIT=`getprop ro.product.cpu.abilist32`
 
 # run
 . $MODPATH/function.sh
@@ -54,7 +58,8 @@ if [ "$IS64BIT" == true ]; then
     ui_print "- 32 bit library support"
   else
     ui_print "- Doesn't support 32 bit library"
-    rm -rf $MODPATH/system*/lib $MODPATH/system*/vendor/lib
+    rm -rf $MODPATH/armeabi-v7a $MODPATH/x86\
+     $MODPATH/system*/lib $MODPATH/system*/vendor/lib
   fi
   ui_print " "
 else
@@ -83,23 +88,6 @@ magisk_setup
 
 # path
 SYSTEM=`realpath $MIRROR/system`
-if [ "$BOOTMODE" == true ]; then
-  if [ ! -d $MIRROR/vendor ]; then
-    mount_vendor_to_mirror
-  fi
-  if [ ! -d $MIRROR/product ]; then
-    mount_product_to_mirror
-  fi
-  if [ ! -d $MIRROR/system_ext ]; then
-    mount_system_ext_to_mirror
-  fi
-  if [ ! -d $MIRROR/odm ]; then
-    mount_odm_to_mirror
-  fi
-  if [ ! -d $MIRROR/my_product ]; then
-    mount_my_product_to_mirror
-  fi
-fi
 VENDOR=`realpath $MIRROR/vendor`
 PRODUCT=`realpath $MIRROR/product`
 SYSTEM_EXT=`realpath $MIRROR/system_ext`
@@ -121,7 +109,7 @@ mv -f $MODPATH/aml.sh $MODPATH/.aml.sh
 MOD_UI=false
 if [ "`grep_prop mod.ui $OPTIONALS`" == 1 ]; then
   APP=AudioFXLineage
-  FILE=/sdcard/$APP.apk
+  FILE=/data/media/"$UID"/$APP.apk
   DIR=`find $MODPATH/system -type d -name $APP`
   ui_print "- Using modified UI apk..."
   if [ -f $FILE ]; then
@@ -184,8 +172,8 @@ done
 # conflict
 ui_print "- This module uses stock AOSP soundfx."
 ui_print "  Make sure you're not using any module that deactivating it"
-ui_print "  like AOSP soundfx Remover or Samsung Sound Alive"
-ui_print "  or something similar!"
+ui_print "  like AOSP soundfx Remover nor Samsung Sound Alive"
+ui_print "  nor something similar!"
 ui_print " "
 NAMES=AOSPsoundfxRemover
 conflict_disable
@@ -204,12 +192,14 @@ fi
 # cleanup
 DIR=/data/adb/modules/$MODID
 FILE=$DIR/module.prop
+PREVMODNAME=`grep_prop name $FILE`
 if [ "`grep_prop data.cleanup $OPTIONALS`" == 1 ]; then
   sed -i 's|^data.cleanup=1|data.cleanup=0|g' $OPTIONALS
   ui_print "- Cleaning-up $MODID data..."
   cleanup
   ui_print " "
-elif [ -d $DIR ] && ! grep -q "$MODNAME" $FILE; then
+elif [ -d $DIR ]\
+&& [ "$PREVMODNAME" != "$MODNAME" ]; then
   ui_print "- Different version detected"
   ui_print "  Cleaning-up $MODID data..."
   cleanup
@@ -340,7 +330,7 @@ if [ "$IS64BIT" == true ]; then
   FILES=/lib64/liblineage-sdk_platform_jni.so
   file_check_system
 fi
-if [ "LIST32BIT" ]; then
+if [ "$LIST32BIT" ]; then
   FILES=/lib/liblineage-sdk_platform_jni.so
   file_check_system
 fi
@@ -353,7 +343,8 @@ FILE=$MODPATH/service.sh
 if [ "`grep_prop audio.rotation $OPTIONALS`" == 1 ]; then
   ui_print "- Enables ro.audio.monitorRotation=true"
   sed -i '1i\
-resetprop ro.audio.monitorRotation true' $FILE
+resetprop -n ro.audio.monitorRotation true\
+resetprop -n ro.audio.monitorWindowRotation true' $FILE
   ui_print " "
 fi
 
@@ -371,9 +362,7 @@ fi
 . $MODPATH/.aml.sh
 
 # unmount
-if [ "$BOOTMODE" == true ] && [ ! "$MAGISKPATH" ]; then
-  unmount_mirror
-fi
+unmount_mirror
 
 
 

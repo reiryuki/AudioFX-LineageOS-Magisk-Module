@@ -22,7 +22,7 @@
 ## Installation Guide & Download Link
 - Do not use AOSP soundfx Remover Magisk Module nor Samsung Sound Alive Magisk Module nor anything that disables your stock AOSP soundfx libraries!
 - Install this module https://www.pling.com/p/1557380/ via Magisk app or KernelSU app or Recovery if Magisk installed
-- Install AML Magisk Module https://t.me/androidryukimodsdiscussions/29836 only if using any other audio mod module
+- Install AML Magisk Module https://t.me/androidryukimodsdiscussions/29836 only if using any other else audio mod module
 - If you are in Samsung One UI/TouchWiz ROM, then you need to install Sound Alive FX Remover (and AML) also: https://github.com/reiryuki/Sound-Alive-FX-Remover-Magisk-Module
 - Reboot
 - If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot after
@@ -30,12 +30,12 @@
 - Play a music with any app that uses external EQ like Xperia Music, YouTube Music, or Spotify first, otherwise AudioFX LineageOS will not work with player that doesn't use external EQ like YouTube and SoundCloud (this trick can't be working if you are activating music stream mode optional)
 
 ## Optionals
-- https://t.me/androidryukimodsdiscussions/60861
-- https://t.me/androidryukimodsdiscussions/26764
+- Global: https://t.me/androidryukimodsdiscussions/60861
+- Stream: https://t.me/androidryukimodsdiscussions/26764
 
 ## Troubleshootings
 - https://t.me/androidryukimodsdiscussions/193490
-- https://t.me/androidryukimodsdiscussions/29836
+- Global: https://t.me/androidryukimodsdiscussions/29836
 
 ## Support & Bug Report
 - https://t.me/androidryukimodsdiscussions/2618
@@ -45,7 +45,7 @@
 - Android 11 DotOS ROM
 - Android 12 AncientOS ROM
 - Android 12.1 Nusantara ROM
-- Android 13 AOSP ROM & CrDroid ROM
+- Android 13 AOSP ROM, CrDroid ROM, & AlphaDroid ROM
 
 ## Credits and contributors
 - https://t.me/viperatmos
