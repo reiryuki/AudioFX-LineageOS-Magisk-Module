@@ -10,7 +10,8 @@
 - Conflicted with Samsung Sound Alive FX
 
 ## Sources
-- LineageOS ROM
+- LineageOS ROM rolex-user 14 AP1A.240505.005 eng.build.20240512.192842 release-keys
+- libmagiskpolicy.so: Kitsune Mask R65C33E4F
 
 ## Screenshots
 - https://t.me/androidryukimodsdiscussions/27160
@@ -25,9 +26,15 @@
 - Install AML Magisk Module https://t.me/androidryukimodsdiscussions/29836 only if using any other else audio mod module
 - If you are in Samsung One UI/TouchWiz ROM, then you need to install Sound Alive FX Remover (and AML) also: https://github.com/reiryuki/Sound-Alive-FX-Remover-Magisk-Module
 - Reboot
-- If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot after
-- If you are using SUList, you need to allow list manually your home launcher app (enable show system apps) and reboot after
-- Play a music with any app that uses external EQ like Xperia Music, YouTube Music, or Spotify first, otherwise AudioFX LineageOS will not work with player that doesn't use external EQ like YouTube and SoundCloud (this trick can't be working if you are activating music stream mode optional)
+- If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot afterwards
+- If you are using SUList, you need to allow list manually your home launcher app (enable show system apps) and reboot afterwards
+- If AudioFX doesn't work, then type:
+
+  `su`
+  
+  `afx`
+  
+  at Terminal/Termux app while playing music
 
 ## Optionals
 - Global: https://t.me/androidryukimodsdiscussions/60861
@@ -46,16 +53,14 @@
 - Android 12 AncientOS ROM
 - Android 12.1 Nusantara ROM
 - Android 13 AOSP ROM, CrDroid ROM, & AlphaDroid ROM
+- Android 14 LineageOS ROM
 
-## Credits and contributors
+## Credits and Contributors
 - https://t.me/viperatmos
 - https://t.me/androidryukimodsdiscussions
 - You can contribute ideas about this Magisk Module here: https://t.me/androidappsportdevelopment
 
-## Thanks for Donations
-This Magisk Module is always will be free but you can however show us that you are care by making a donations:
-- https://ko-fi.com/reiryuki
-- https://www.paypal.me/reiryuki
+## Sponsors
 - https://t.me/androidryukimodsdiscussions/2619
 
 

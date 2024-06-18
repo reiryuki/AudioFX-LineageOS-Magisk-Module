@@ -46,22 +46,6 @@ chmod 0755 $MODPATH/*/libmagiskpolicy.so
 FILE=$MODPATH/sepolicy.pfsd
 sepolicy_sh
 
-# list
-PKGS=`cat $MODPATH/package.txt`
-for PKG in $PKGS; do
-  magisk --denylist rm $PKG 2>/dev/null
-  magisk --sulist add $PKG 2>/dev/null
-done
-if magisk magiskhide sulist; then
-  for PKG in $PKGS; do
-    magisk magiskhide add $PKG
-  done
-else
-  for PKG in $PKGS; do
-    magisk magiskhide rm $PKG
-  done
-fi
-
 # conflict
 DIR=/data/adb/modules/AOSPsoundfxRemover
 if [ -d $DIR ] && [ ! -f $DIR/disable ]; then
@@ -73,7 +57,13 @@ fi
 . $MODPATH/.aml.sh
 
 # permission
+chmod 0751 $MODPATH/system/bin
+FILES=`find $MODPATH/system/bin -type f`
+for FILE in $FILES; do
+  chmod 0755 $FILE
+done
 if [ "$API" -ge 26 ]; then
+  chown -R 0.2000 $MODPATH/system/bin
   DIRS=`find $MODPATH/vendor\
              $MODPATH/system/vendor -type d`
   for DIR in $DIRS; do
@@ -125,7 +115,7 @@ fi
 FILE=$MODPATH/cleaner.sh
 if [ -f $FILE ]; then
   . $FILE
-  mv -f $FILE $FILE\.txt
+  mv -f $FILE $FILE.txt
 fi
 
 

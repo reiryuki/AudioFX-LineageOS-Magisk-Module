@@ -29,6 +29,13 @@ if [ "`grep_prop debug.log $OPTIONALS`" == 1 ]; then
   ui_print " "
 fi
 
+# recovery
+if [ "$BOOTMODE" != true ]; then
+  MODPATH_UPDATE=`echo $MODPATH | sed 's|modules/|modules_update/|g'`
+  rm -f $MODPATH/update
+  rm -rf $MODPATH_UPDATE
+fi
+
 # run
 . $MODPATH/function.sh
 
@@ -73,7 +80,7 @@ fi
 NUM=23
 if [ "$API" -lt $NUM ]; then
   ui_print "! Unsupported SDK $API. You have to upgrade your"
-  ui_print "  Android version at least SDK API $NUM to this module."
+  ui_print "  Android version at least SDK $NUM to use this module."
   abort
 else
   ui_print "- SDK $API"
@@ -130,7 +137,10 @@ ui_print "- Cleaning..."
 PKGS=`cat $MODPATH/package.txt`
 if [ "$BOOTMODE" == true ]; then
   for PKG in $PKGS; do
-    RES=`pm uninstall $PKG 2>/dev/null`
+    FILE=`find /data/app -name *$PKG*`
+    if [ "$FILE" ]; then
+      RES=`pm uninstall $PKG 2>/dev/null`
+    fi
   done
 fi
 remove_sepolicy_rule
@@ -152,12 +162,12 @@ for NAME in $NAMES; do
     sh $FILE
     rm -f $FILE
   fi
-  rm -rf /metadata/magisk/$NAME
-  rm -rf /mnt/vendor/persist/magisk/$NAME
-  rm -rf /persist/magisk/$NAME
-  rm -rf /data/unencrypted/magisk/$NAME
-  rm -rf /cache/magisk/$NAME
-  rm -rf /cust/magisk/$NAME
+  rm -rf /metadata/magisk/$NAME\
+   /mnt/vendor/persist/magisk/$NAME\
+   /persist/magisk/$NAME\
+   /data/unencrypted/magisk/$NAME\
+   /cache/magisk/$NAME\
+   /cust/magisk/$NAME
 done
 }
 conflict_disable() {
@@ -312,32 +322,6 @@ if echo "$PROP" | grep -q m; then
   ui_print " "
 fi
 
-# function
-file_check_system() {
-for FILE in $FILES; do
-  DES=$SYSTEM$FILE
-  DES2=$SYSTEM_EXT$FILE
-  if [ -f $DES ] || [ -f $DES2 ]; then
-    ui_print "- Detected $FILE"
-    ui_print " "
-    rm -f $MODPATH/system$FILE
-  fi
-done
-}
-
-# check
-if [ "$IS64BIT" == true ]; then
-  FILES=/lib64/liblineage-sdk_platform_jni.so
-  file_check_system
-fi
-if [ "$LIST32BIT" ]; then
-  FILES=/lib/liblineage-sdk_platform_jni.so
-  file_check_system
-fi
-FILES="/framework/org.lineageos.platform-res.apk
-       /framework/org.lineageos.platform-mod.jar"
-file_check_system
-
 # audio rotation
 FILE=$MODPATH/service.sh
 if [ "`grep_prop audio.rotation $OPTIONALS`" == 1 ]; then
@@ -351,7 +335,7 @@ fi
 # raw
 FILE=$MODPATH/.aml.sh
 if [ "`grep_prop disable.raw $OPTIONALS`" == 0 ]; then
-  ui_print "- Not disables Ultra Low Latency playback (RAW)"
+  ui_print "- Does not disable Ultra Low Latency playback (RAW)"
   ui_print " "
 else
   sed -i 's|#u||g' $FILE
@@ -363,6 +347,15 @@ fi
 
 # unmount
 unmount_mirror
+
+# note
+ui_print "- If AudioFX doesn't work, then type:"
+ui_print " "
+ui_print "  su"
+ui_print "  afx"
+ui_print " "
+ui_print "  at Terminal/Termux app while playing music"
+ui_print " "
 
 
 
