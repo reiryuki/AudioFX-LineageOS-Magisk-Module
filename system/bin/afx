@@ -1,1 +1,106 @@
+#!/bin/sh
 
+# function
+start_broadcast() {
+am broadcast -a android.media.action.OPEN_AUDIO_EFFECT_CONTROL_SESSION -c android.intent.category.DEFAULT --es android.media.extra.PACKAGE_NAME $PKG --ei android.media.extra.AUDIO_SESSION $SESSION --ei android.media.extra.CONTENT_TYPE $TYPE
+}
+start_activity() {
+am start-activity -a android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL -c android.intent.category.DEFAULT -p org.lineageos.audiofx
+}
+afx_warn() {
+echo "Please play music first!"
+}
+afx_result() {
+echo "Package Name = $PKG"
+if [ "$SESSION" ]; then
+  echo "Audio Session = $SESSION"
+  echo "Content Type = $TYPE ($TYPENAME)"
+  if ! start_broadcast; then
+    FILE=/sys/fs/selinux/enforce
+    chmod 0644 $FILE
+    SELINUX=`cat $FILE`
+    if [ "$SELINUX" == 1 ]; then
+      echo 0 > $FILE
+      start_broadcast
+      echo 1 > $FILE
+    fi
+  fi
+  if [ "$SESSION" -lt 0 ]; then
+    echo "Unsupported music player"
+  else
+    if ! start_activity; then
+      FILE=/sys/fs/selinux/enforce
+      chmod 0644 $FILE
+      SELINUX=`cat $FILE`
+      if [ "$SELINUX" == 1 ]; then
+        echo 0 > $FILE
+        start_activity
+        echo 1 > $FILE
+      fi
+    fi
+  fi
+else
+  afx_warn
+fi
+}
+run_afx() {
+PKGS=`dumpsys media_session | sed 's| |\n|g' | grep packages= | sed 's|packages=||g'`
+unset PKG
+if [ "$PKGS" ]; then
+  for PKG in $PKGS; do
+    PIDS=`pidof "$PKG"`
+    unset SESSION
+    unset TYPE
+    unset TYPENAME
+    if [ "$PIDS" ]; then
+      for PID in $PIDS; do
+        DUMP=`dumpsys audio | grep "$PID" | grep sessionId: | sed 's| |\n|g'`
+        if [ "$DUMP" ]; then
+          SESSION=`echo "$DUMP" | grep sessionId: | sed 's|sessionId:||g'`
+          if [ "$SESSION" ]; then
+            CONTENT=`echo "$DUMP" | grep content= | sed 's|content=||g'`
+            if echo "$CONTENT" | grep -q MUSIC; then
+              TYPE=2
+              TYPENAME=Music
+            elif echo "$CONTENT" | grep -q MOVIE; then
+              TYPE=3
+              TYPENAME=Movie
+            elif echo "$CONTENT" | grep -q SONIFICATION; then
+              TYPE=4
+              TYPENAME=Sonification
+            elif echo "$CONTENT" | grep -q SPEECH; then
+              TYPE=1
+              TYPENAME=Speech
+            elif echo "$CONTENT" | grep -q ULTRASOUND; then
+              TYPE=1997
+              TYPENAME=Ultrasound
+            elif echo "$CONTENT" | grep -q UNKNOWN; then
+              TYPE=0
+              TYPENAME=Unknown
+            else
+              TYPE=-1
+              TYPENAME=Undefined
+            fi
+            afx_result
+          else
+            afx_result
+          fi
+        else
+          afx_result
+        fi
+      done
+    else
+      afx_result
+    fi
+  done
+else
+  afx_warn
+fi
+}
+
+# check
+if [ "`whoami`" == root ]; then
+  run_afx
+else
+  echo "Please type su first!"
+fi
