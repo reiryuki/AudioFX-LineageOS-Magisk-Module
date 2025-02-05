@@ -42,7 +42,7 @@
 - Stream: https://t.me/ryukinotes/52
 
 ## Troubleshootings
-- https://t.me/androidryukimodsdiscussions/193490
+- https://t.me/ryukinotes/71
 - Global: https://t.me/ryukinotes/34
 
 ## Support & Bug Report
