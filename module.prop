@@ -1,7 +1,7 @@
 id=AudioFXLineage
 name=AudioFX LineageOS
-version=v3.1
-versionCode=31
+version=v3.2
+versionCode=32
 author=Rei Ryuki the Fixer
 description=Equalizer global type sound effects ported from LineageOS ROM for any Android 6 (SDK 23) and up.
 
