@@ -10,7 +10,7 @@
 - Conflicted with Samsung Sound Alive effect
 
 ## Sources
-- LineageOS ROM rolex-user 14 AP1A.240505.005 eng.build.20240512.192842 release-keys
+- LineageOS 21 Android 14 AP1A.240505.005 eng.build.20240512.192842
 - libmagiskpolicy.so: Kitsune Mask R6687BB53
 
 ## Screenshots
