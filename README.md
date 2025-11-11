@@ -18,11 +18,11 @@
 
 ## Requirements
 - Android 6 (SDK 23) and up
-- Magisk or KernelSU installed
+- Magisk or Kitsune Mask or KernelSU or Apatch installed
 
 ## Installation Guide & Download Link
 - Do not use AOSP Sound Effects Remover Magisk Module nor Samsung Sound Alive Magisk Module nor anything that disables your stock AOSP sound effects libraries!
-- Install this module https://www.pling.com/p/1557380/ via Magisk app or KernelSU app or Recovery if Magisk installed
+- Install this module https://www.pling.com/p/1557380/ via Magisk app or Kitsune Mask app or KernelSU app or Apatch app or Recovery if Magisk or Kitsune Mask installed
 - Install AML Magisk Module https://t.me/ryukinotes/34 only if using any other else audio mod module
 - If you are in Samsung One UI/TouchWiz ROM, then you need to install Sound Alive Effect Remover (and AML) also: https://github.com/reiryuki/Sound-Alive-FX-Remover-Magisk-Module
 - If you are using KernelSU, you need to disable Unmount Modules by Default in KernelSU app settings
@@ -36,6 +36,7 @@
   `afx`
   
   at Terminal/Termux app while playing music
+- If afx command triggers integrity failure in your ROM then you can use Xperia Music instead: https://github.com/reiryuki/Xperia-Music-Magisk-Module and choose Sound effects in the app
 
 ## Optionals
 - Global: https://t.me/ryukinotes/35
