@@ -3,7 +3,6 @@
 # destination
 MODAECS=`find $MODPATH -type f -name *audio*effects*.conf`
 MODAEXS=`find $MODPATH -type f -name *audio*effects*.xml`
-MODAPS=`find $MODPATH -type f -name *policy*.conf -o -name *policy*.xml`
 
 # remove
 RMVS="ring_helper alarm_helper music_helper voice_helper
@@ -25,12 +24,6 @@ for MODAEX in $MODAEXS; do
     sed -i "s|<apply effect=\"$RMV\" />||g" $MODAEX
   done
 done
-
-# patch audio policy
-#ufor MODAP in $MODAPS; do
-#u  sed -i 's|RAW|NONE|g' $MODAP
-#u  sed -i 's|,raw||g' $MODAP
-#udone
 
 
 
