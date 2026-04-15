@@ -16,6 +16,42 @@
 ## Screenshots
 - https://t.me/androidryukimodsdiscussions/27160
 
+## Changelog 
+
+v3.5
+- Fix script bug
+- Does not disable raw playback (You can use Audio Compatibility Patch Reborn Magisk Module instead)
+
+v3.4
+- Fix wrong target in latest KernelSU
+
+v3.3
+- Abort installation if fail to mount mirror system
+
+v3.2
+- Fix isAtLeastV method in AudioFXLineage.apk
+
+v3.1
+- Fix conflict with Play Integrity Fix Magisk Module in some devices
+
+v3.0
+- Fix afx script failure in some ROMs
+- Improve /odm and /my_product support detection
+
+v2.19
+- Improve afx script
+
+v2.18
+- Add $PKG:service at afx command
+
+v2.17
+- Add Action button to clear apps caches
+
+v2.16
+- Fix afx command to handle more than one audio session in one process
+- Fix architecture detection
+- Fix bug in uninstall.sh
+
 ## Requirements
 - Android 6 (SDK 23) and up
 - Magisk or Kitsune Mask or KernelSU or Apatch installed
@@ -23,7 +59,7 @@
 ## Installation Guide & Download Link
 - If you are using KernelSU, you need to disable Unmount Modules by Default in KernelSU app settings and install https://github.com/KernelSU-Modules-Repo/meta-overlayfs first
 - Do not use AOSP Sound Effects Remover Magisk Module nor Samsung Sound Alive Magisk Module nor anything that disables your stock AOSP sound effects libraries.
-- Install this module https://www.pling.com/p/1557380/ via Magisk app or Kitsune Mask app or KernelSU app or Apatch app or Recovery if Magisk or Kitsune Mask installed
+- Install this module via Magisk app or Kitsune Mask app or KernelSU app or Apatch app or Recovery if Magisk or Kitsune Mask installed
 - Install AML Magisk Module https://t.me/ryukinotes/34 only if using any other else audio mod module
 - If you are in Samsung One UI/TouchWiz ROM, then you need to install Sound Alive Effect Remover (and AML) also: https://github.com/reiryuki/Sound-Alive-FX-Remover-Magisk-Module
 - Reboot
