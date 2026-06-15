@@ -11,12 +11,14 @@
 
 ## Sources
 - LineageOS 21 Android 14 AP1A.240505.005 eng.build.20240512.192842
-- libmagiskpolicy.so: Kitsune Mask R6687BB53
-
-## Screenshots
-- https://t.me/androidryukimodsdiscussions/27160
+- libmagiskpolicy.so: Magisk (stable) 30.7 (30700)
 
 ## Changelog 
+
+v3.6
+- Support NoMount metamodule
+- Update libmagiskpolicy.so from Magisk (stable) 30.7 (30700)
+- Move _uninstall.log to /data/adb/logs/
 
 v3.5
 - Fix script bug
@@ -47,19 +49,17 @@ v2.18
 v2.17
 - Add Action button to clear apps caches
 
-v2.16
-- Fix afx command to handle more than one audio session in one process
-- Fix architecture detection
-- Fix bug in uninstall.sh
+## Screenshots
+https://t.me/androidryukimodsdiscussions/27160
 
 ## Requirements
 - Android 6 (SDK 23) and up
 - Magisk or Kitsune Mask or KernelSU or Apatch installed
 
 ## Installation Guide & Download Link
-- If you are using KernelSU, you need to disable Unmount Modules by Default in KernelSU app settings and install https://github.com/KernelSU-Modules-Repo/meta-overlayfs first
+- If you are using KernelSU, you need to disable Unmount Modules by Default in KernelSU app settings and install https://github.com/KernelSU-Modules-Repo/meta-overlayfs or https://github.com/KernelSU-Modules-Repo/magic_mount_rs or https://github.com/KernelSU-Modules-Repo/hybrid_mount or https://github.com/maxsteeel/nomount first depending on ROM compatibility
 - Do not use AOSP Sound Effects Remover Magisk Module nor Samsung Sound Alive Magisk Module nor anything that disables your stock AOSP sound effects libraries.
-- Install this module https://devuploads.com/c8prdi3vns2r via Magisk app or Kitsune Mask app or KernelSU app or Apatch app or Recovery if Magisk or Kitsune Mask installed
+- Install this module via Magisk app or Kitsune Mask app or KernelSU app or Apatch app or Recovery if Magisk or Kitsune Mask installed
 - Install AML Magisk Module https://t.me/ryukinotes/34 only if using any other else audio mod module
 - If you are in Samsung One UI/TouchWiz ROM, then you need to install Sound Alive Effect Remover (and AML) also: https://github.com/reiryuki/Sound-Alive-FX-Remover-Magisk-Module
 - Reboot
@@ -93,6 +93,6 @@ v2.16
 - You can contribute ideas about this Magisk Module here: https://t.me/androidappsportdevelopment
 
 ## Sponsors
-- https://t.me/ryukinotes/25
+https://t.me/ryukinotes/25
 
 
